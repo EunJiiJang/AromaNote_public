@@ -1,0 +1,206 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="admin/common/head.html"></th:block>
+</head>
+<body>
+<div id="wrap" class="loadingNot">
+    <div id="loading">
+        <span class="hide">로딩중</span>
+    </div>
+
+    <th:block th:replace="admin/common/header.html"></th:block>
+    <!-- container -->
+
+    <div id="container" class="pdt0">
+        <div class="mypage">
+            <div class="myWish myCon">
+                <div class="contents">
+                    <th:block th:replace="admin/common/gnb.html"></th:block>
+                    <!-- myPageCon -->
+                    <div class="myPageCon">
+                        <p class="tit mgb40">
+                            관리자 등록
+                        </p>
+                        <div class="popupInsert" id="pdtQna">
+                            <form action="/manager/save" method="post">
+                                <ul class="inputArea">
+                                    <li>
+                                        <dl class="mgt20">
+                                            <div class="inp_wrap inp_email mgt20">
+                                                <div class="inp_lab"><label for="join_email">이메일</label></div>
+                                                <div class="inp_text">
+                                                    <input type="text" id="join_email" placeholder="이메일">
+                                                </div>
+                                                <span class="hyphen">@</span>
+                                                <div class="inp_select">
+                                                    <div class="selectBox">
+                                                        <button class="title" type="button" title=""></button>
+                                                        <ul class="selList">
+                                                            <li>
+                                                                <input type="radio" value="" class="option" id="join_email1" name="join_email" checked>
+                                                                <label for="join_email1">naver.com</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="radio" value="" class="option" id="join_email2" name="join_email">
+                                                                <label for="join_email2">google.com</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="radio" value="" class="option" id="join_email3" name="join_email">
+                                                                <label for="join_email3">직접선택</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="inp_text email_input">
+                                                    <input type="text" title="이메일 직접입력">
+                                                </div>
+                                                <a href="#" class="btn btnSizeL btnArr btnColorB btnTypeB"><span>중복확인</span></a>
+                                                <p class="error">이메일 형식을 확인해주세요.</p>
+                                                <p class="error">이미 사용중인 이메일입니다.</p>
+                                            </div>
+                                        </dl>
+                                        <dl class="mgt20">
+
+                                            <dd>
+                                                <div class="inp_wrap mgt20">
+                                                    <div class="inp_lab"><label for="join_pw">비밀번호</label></div>
+                                                    <div class="inp_text">
+                                                        <input type="password" id="join_pw" placeholder="비밀번호를 입력해주세요. (숫자/영문/특수문자 조합 8~12자 이내)">
+                                                    </div>
+                                                    <p class="error">비밀번호는 최소 8자 이상 입력해야 합니다.</p>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <dd>
+                                                <div class="inp_wrap mgt20">
+                                                    <div class="inp_lab"><label for="join_pw_chk">비밀번호 재확인</label></div>
+                                                    <div class="inp_text">
+                                                        <input type="password" id="join_pw_chk" placeholder="비밀번호를 한 번 더 확인해주세요.">
+                                                    </div>
+                                                    <p class="error">비밀번호가 일치하지 않습니다.</p>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <div class="inp_wrap inp_post">
+                                                <div class="inp_lab"><label for="join_pw_chk">닉네임</label></div>
+                                                <div class="inp_text post_num">
+                                                    <input type="text" id="join_post" readonly placeholder="사용하고싶은 닉네임을 입력해주세요.">
+                                                </div>
+                                                <a href="#" class="btn btnSizeL btnArr btnColorB btnTypeB"><span>중복확인</span></a>
+                                                <p class="error">상세주소를 정확하게 입력해주세요.</p>
+                                            </div>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <dd>
+                                                <div class="inp_wrap">
+                                                    <div class="inp_lab"><label for="join_pw_chk">이름</label></div>
+                                                    <div class="inp_text ">
+                                                        <input type="text" name="popNm" id="popNm" placeholder="이름을 입력하세요" >
+                                                        <button class="btn_clear"><span>clear</span></button>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <div class="inp_wrap inp_phone mgt30">
+                                                <div class="inp_lab"><label for="join_pw_chk">생년월일</label></div>
+                                                <div class="inp_select">
+                                                    <div class="selectBox">
+                                                        <button class="title" type="button" title="">년도</button>
+                                                        <ul class="selList">
+                                                            <li th:each="m : ${#numbers.sequence(#calendars.format(#calendars.createNow(), 'yyyy'),1910)}">
+                                                                <input type="radio" th:value="${m}" class="option" th:id="'userBirth'+${m}" name="userBirth">
+                                                                <label th:for="'userBirth'+${m}" th:text="${m}"></label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="inp_select" style="margin-left: 10px;">
+                                                    <div class="selectBox">
+                                                        <button class="title" type="button" title="">월</button>
+                                                        <ul class="selList">
+                                                            <li th:each="m : ${#numbers.sequence(1,12)}">
+                                                                <input type="radio" th:value="${m} <= 9 ? '0'+${m} : ${m}" class="option" th:id="'userBirth2'+${m}" name="userBirth2">
+                                                                <label th:for="'userBirth2'+${m}" th:text="${m} <= 9 ? '0'+${m} : ${m}"></label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="inp_select" style="margin-left: 10px;">
+                                                    <div class="selectBox">
+                                                        <button class="title"  type="button" title="">일</button>
+                                                        <ul class="selList">
+                                                            <li th:each="m : ${#numbers.sequence(1,31)}">
+                                                                <input type="radio" th:value="${m} <= 9 ? '0'+${m} : ${m}" class="option" th:id="'userBirth3'+${m}" name="userBirth3">
+                                                                <label th:for="'userBirth3'+${m}" th:text="${m} <= 9 ? '0'+${m} : ${m}"></label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <div class="mgb10">
+                                                <div class="inp_lab"><label for="join_pw_chk">성별</label></div>
+                                                <span class="inp_radio">
+													<input type="radio" name="inp_radio1" id="inp_radio1_1">
+													<label for="inp_radio1_1">여자</label>
+												</span>
+                                                <span class="inp_radio">
+													<input type="radio" name="inp_radio1" id="inp_radio1_2">
+													<label for="inp_radio1_2">남자</label>
+												</span>
+                                            </div>
+                                        </dl>
+                                        <dl class="mgt20">
+                                            <div class="inp_wrap inp_phone mgt30">
+                                                <div class="inp_lab"><label for="join_pw_chk">전화번호</label></div>
+                                                <div class="inp_select">
+                                                    <div class="selectBox">
+                                                        <button class="title" id="phone" type="button" title="">010</button>
+                                                        <ul class="selList">
+                                                            <li>
+                                                                <input type="radio" value="" class="option" id="select1_1" name="select1">
+                                                                <label for="select1_1">010</label>
+                                                            </li>
+                                                            <li>
+                                                                <input type="radio" value="" class="option" id="select1_2" name="select1">
+                                                                <label for="select1_2">011</label>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="inp_text">
+                                                    <input type="text" title="휴대폰 가운대">
+                                                </div>
+                                                <div class="inp_text">
+                                                    <input type="text" title="휴대폰 마지막">
+                                                </div>
+                                            </div>
+                                        </dl>
+                                    </li>
+
+                                </ul>
+                                <div class="btn_wrap">
+                                    <a href="/popup/list" class="btn btnSizeL btnColorG btnTypeR" style="width:150px;"><span>취소</span></a>
+                                    <button class="btn btnSizeL btnColorP btnTypeR" style="width:150px;"><span>등록</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- //myPageCon -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //container -->
+</div>
+<script type="text/javascript">
+$(document).ready(function() {
+
+})
+</script>

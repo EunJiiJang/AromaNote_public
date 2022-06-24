@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+    <script type="text/javascript" src="../../../static/admin/js/jquery-3.3.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Click <a th:href="@{/member/member}">member</a> to see a greeting.</p>
+<p>Click <a th:href="@{/admin/admin}">admin</a> to see a greeting.</p>
+<p>Click <a th:href="@{/testA}">adminTest</a> to see a greeting.</p>
+<p >Click <a onclick="fn_login()">로그인</a> to see a greeting.</p>
+<p sec:authorize="isAuthenticated()">Click <a th:href="@{/login/logout}">로그아웃12</a> to see a greeting.</p>
+<form class="form-inline my-2 my-lg-0" th:action="@{/login/logout}" method="get" sec:authorize="isAuthenticated()">
+    <span class="text-white mr-2 mx-2" sec:authentication="name">사용자</span>
+    <span class="text-white mr-2 mx-2" sec:authentication="principal.authorities">권한</span>
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">logout</button>
+</form>
+<span class="text-white mr-2 mx-2" sec:authorize="hasRole('ROLE_ADMIN')">관리자</span>
+<span class="text-white mr-2 mx-2" sec:authorize="hasRole('ROLE_MEMBER')">멤버</span>
+<form class="form-inline my-2 my-lg-0" th:action="@{/login/logout}" method="get" sec:authorize="isAuthenticated()">
+    <p th:text="${#authentication.name}"></p>
+    <p th:text="${#authentication.authorities}"></p>
+    <p th:text="${#authentication.authenticated}"></p>
+</form>
+
+
+</body>
+</html>
+<script type="text/javascript">
+
+    function fn_login(){
+        // var token = $("meta[name='_csrf']").attr("content");
+        // var header = $("meta[name='_csrf_header']").attr("content");
+
+        param = new Object();
+        param.username = "testId";
+        param.password = "password";
+        var data = JSON.stringify(param);
+        $.ajax({
+            data : data,
+            url: "/login",
+            type : "POST",
+            success:function (data){
+                console.log('Success!')
+                localStorage.setItem('token', data.id_token);
+                window.location.href = "main/main.html";
+
+            }
+            /*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+            // beforeSend : function(xhr){
+            // 	xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+            // },
+
+        });
+
+    }
+
+
+    /**
+     * 로그인
+     */
+    function fn_login_csrf(){
+        param = new Object();
+        param.username = "testId";
+        param.password = "password";
+        var data = JSON.stringify(param);
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: data
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.token) {
+                    localStorage.setItem('wtw-token', response.token);
+                }
+            })
+
+    }
+</script>

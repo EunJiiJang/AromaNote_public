@@ -1,0 +1,129 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="admin/common/head.html"></th:block>
+</head>
+<body>
+<div id="wrap" class="loadingNot">
+	<div id="loading">
+		<span class="hide">로딩중</span>
+	</div>
+
+	<th:block th:replace="admin/common/header.html"></th:block>
+	<!-- container -->
+	
+	<div id="container" class="pdt0">
+		<div class="mypage">
+			<div class="myWish myCon">
+				<div class="contents">
+					<th:block th:replace="admin/common/gnb.html"></th:block>
+					<!-- myPageCon -->
+					<div class="myPageCon">
+						<p class="tit mgb40">
+							팝업 등록
+						</p>
+                        <div class="popupInsert" id="pdtQna">
+                            <form action="/popup/insert" method="post">                            
+                                <ul class="inputArea">
+                                    <li>
+                                        <dl class="mgt10">
+                                            <dt class="starOn">팝업 유형</dt>
+                                            <dd>
+                                                <div class="inp_wrap">
+                                                    <div class="inp_select sizeS">
+                                                        <div class="selectBox">
+                                                            <button class="title" type="button">텍스트형</button>
+                                                            <ul class="selList">
+                                                                <li>
+                                                                    <input type="radio" value="text" class="option" id="popType1" name="popType" checked>
+                                                                    <label for="popType1">텍스트형</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input type="radio" value="img" class="option" id="popType2" name="popType">
+                                                                    <label for="popType2">이미지형</label>
+                                                                </li>                                                        
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>                                            
+                                            </dd>
+                                        </dl>    
+                                        <dl class="mgt20">
+                                            <dt class="starOn"><label for="pdtQna_pdtSearch">팝업명</label></dt>
+                                            <dd>
+                                                <div class="inp_wrap">
+                                                    <div class="inp_text sizeS">
+                                                        <input type="text" name="popNm" id="popNm" placeholder="팝업명을 입력하세요" >
+                                                        <button class="btn_clear"><span>clear</span></button>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>         
+                                        <dl class="mgt20">
+                                            <dt class="starOn"><label for="pdtQna_pdtSearch">노출여부</label></dt>
+                                            <dd>
+                                                <div class="inp_wrap">
+                                                    <div class="inp_select sizeS">
+                                                        <div class="selectBox">
+                                                            <button class="title" type="button">노출</button>
+                                                            <ul class="selList">
+                                                                <li>
+                                                                    <input type="radio" value="Y" class="option" id="dispFlY" name="dispFl">
+                                                                    <label for="dispFlY">노출</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input type="radio" value="N" class="option" id="dispFlN" name="dispFl">
+                                                                    <label for="dispFlN">비노출</label>
+                                                                </li>                                                        
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>  
+                                        <dl class="mgt20">
+                                            <dt class="starOn"><label for="pdtQna_pdtSearch">노출순서</label></dt>
+                                            <dd>
+                                                <div class="inp_wrap">
+                                                    <div class="inp_text sizeS">
+                                                        <input type="number" name="sortOrderBy" id="sortOrderBy" placeholder="숫자로 입력하세요" >
+                                                        <button class="btn_clear"><span>clear</span></button>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>                                                                           
+                                    </li>
+                                    <li class="textType">                                    
+                                        <dl class="mgt20">
+                                            <dt class="starOn"><label for="pdtQna_qnaCtt">팝업내용</label></dt>
+                                            <dd class="wide">
+                                                <textarea id="summernote" name="popCon"></textarea>                                            
+                                            </dd>
+                                        </dl>
+                                    </li>                                                         
+                                </ul>
+                                <div class="btn_wrap">
+                                    <a href="/popup/list" class="btn btnSizeL btnColorG btnTypeR" style="width:150px;"><span>취소</span></a>
+                                    <button class="btn btnSizeL btnColorP btnTypeR" style="width:150px;"><span>등록</span></button>
+                                </div>
+                            </form>
+                        </div>
+					</div>
+					<!-- //myPageCon -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //container -->
+</div>
+<script src="https://cdn.tiny.cloud/1/pnjon5lr5tdmtws2ixr0g0kgb2lor553blk7icqupxa0qnor/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code export formatpainter image editimage pageembed permanentpen table tableofcontents',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Author name',
+    });
+</script>

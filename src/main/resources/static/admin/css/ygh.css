@@ -1,0 +1,9 @@
+#pdtQna.popupInsert .inputArea dd.wide { width: 100%; }
+#pdtQna.popupInsert .inputArea dd { font-size: 14px; }
+.Dateterm { display:flex; align-items: center;}
+.Dateterm .term { margin: 0 10px; }
+.adminSearch table { border: 1px solid #ddd; }
+.adminSearch table tr{ border-bottom: 1px solid #ddd; }
+.adminSearch table th, .adminSearch table td { padding: 10px; box-sizing: border-box; border-right: 1px solid #ddd;}
+.adminSearch table th { background: #f7f7f7; }
+.ui-datepicker { z-index: 99!important; }

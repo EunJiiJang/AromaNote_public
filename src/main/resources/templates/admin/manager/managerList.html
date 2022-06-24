@@ -1,0 +1,287 @@
+<!Doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="admin/common/head.html"></th:block>
+</head>
+<body>
+<div id="wrap" class="loadingNot">
+	<div id="loading">
+		<span class="hide">로딩중</span>
+	</div>
+
+	<th:block th:replace="admin/common/header.html"></th:block>
+	<!-- container -->
+	
+	<div id="container" class="pdt0">
+		<div class="mypage">
+			<div class="myWish myCon">
+				<div class="contents">
+					<th:block th:replace="admin/common/gnb.html"></th:block>
+
+					<!-- myPageCon -->
+					<div class="myPageCon">
+						<p class="tit mgb40">
+							관리자 관리
+						</p>
+						<form th:action="@{/manager/list}" method="post" id="frm_managerSearch" >
+							<div class="adminSearch">
+								<table>
+									<caption>상세검색</caption>	
+									<tr>
+										<th>선택사항</th>
+										<td>
+											<div class="inp_wrap">
+												<div class="inp_select sizeS">
+													<div class="selectBox">
+														<button class="title" type="button">옵션을 선택해주세요</button>
+														<ul class="selList">
+															<li>
+																<input type="radio" value="email" checked class="option" id="select1_1" name="option">
+																<label for="select1_1" >이메일</label>
+															</li>
+															<li>
+																<input type="radio" value="cstmNm" class="option" id="select1_2" name="option">
+																<label for="select1_2">이름</label>
+															</li>													
+															<li>
+																<input type="radio" value="nickNm" class="option" id="select1_3" name="option">
+																<label for="select1_3">닉네임</label>
+															</li>														
+														</ul>
+													</div>
+												</div>
+											</div>
+										</td>
+										<th>검색어</th>
+										<td>
+											<div class="inp_wrap">
+												<div class="inp_text searchType sizeS">
+													<input type="text" name="keyword" id="keyword" value="" placeholder="검색어를 입력해주세요">
+													<button type="button" class="btn_clear"><span>clear</span></button>
+													<button type="button" class="btn_search"><span>search</span></button>
+												</div>
+											</div>
+										</td>
+									</tr>								
+								</table>
+								<div class="btn_wrap mgt30" style="text-align:right">
+									<a href="javascript:;" class="btn btnSizeM btnColorW btnTypeB" style="width:150px;" id="btn_managerSearch"><span>검색</span></a>
+								</div>
+							</div>
+						</form>
+						<div class="pdtWishBar mgb40">
+							<span class="inp_check">
+								<input type="checkbox" name="seqChk" id="chkTimeAllChk" onclick="fn_checkAll(this)">
+								<label for="chkTimeAllChk">전체선택</label>
+							</span>
+							<div class="btn_wrap">
+								<a href="/manager/insert" class="basketBtn btn btnSizeS btnColorW btnTypeB"><span>등록하기</span></a>
+								<a href="javascript:void(0)" onclick="showLayer('mainDel');" class="wishBtn btn btnSizeS btnColorW btnTypeB"><span>삭제하기</span></a>
+							</div>
+						</div>
+						<div class="tblType1">
+							<table summary="관리자 관리 테이블" id="dt_managerList">
+								<caption>관리자 관리 테이블</caption>
+								<colgroup>
+									<col width="5%">
+									<col width="5%">
+									<col width="*">
+                                    <col width="15%">
+									<col width="15%">
+									<col width="20%">
+								</colgroup>
+								<thead>
+									<tr>
+										<th>선택</th>
+										<th>NO</th>
+										<th>email</th>
+                                        <th>닉네임</th>
+										<th>이름</th>
+										<th>등록일</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<input type="hidden" name="manager_pageNo" id="manager_pageNo" value="1">
+						<div class="paging mgt40" id="managerList_pagination"></div>
+					</div>
+					</div>
+					<!-- //myPageCon -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //container -->
+</div>
+
+
+<!-- 팝업 삭제 -->
+<div id="mainDel" class="lyPopArea">
+    <div class="lyPop">
+        <div class="lyWrap">
+            <button type="button" class="lyClose" onclick="layerPopClose();"><span class="hide">CLOSED</span></button>
+            <div class="lyTit">팝업 삭제</div>
+            <div class="lyBody basic">
+                <p>정말 삭제하시겠습니까?</p>
+                <div class="btn_wrap length2">
+                    <a href="javascript:void(0);" onclick="layerPopClose();" class="btn btnSizeL btnArr btnColorW btnTypeR"><span>취소</span></a>
+                    <a href="javascript:void(0);" onclick="fn_deleteManagerList();" class="btn btnSizeL btnArr btnColorB btnTypeR"><span>확인</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 팝업 리스트 선택 -->
+<div id="mainNotice" class="lyPopArea">
+    <div class="lyPop">
+        <div class="lyWrap">
+            <button type="button" class="lyClose" onclick="layerPopClose();"><span class="hide">CLOSED</span></button>
+            <div class="lyTit">알림</div>
+            <div class="lyBody basic">
+                <p>삭제하려는 행을 선택해주세요</p>
+                <div class="btn_wrap length1">
+                    
+                    <a href="javascript:void(0);" onclick="layerPopClose();" class="btn btnSizeL btnArr btnColorB btnTypeR"><span>확인</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	//  recoQuick();
+	//  $('#quick .quickArea').css({'position':'absolute', 'top':290});
+
+	var dtManagerList;
+$(document).ready(function() {
+	var pageNo = $("#manager_pageNo").val();
+	// 검색버튼 이벤트 등록'
+	$("#btn_managerSearch").on("click", function(e) {
+		fn_getManagerList();
+	});
+	//Enter Action시 검색 Event
+	$('#frm_managerSearch').on("keypress", function (event) {
+		if (event.keyCode == 13) {
+			fn_getManagerList();
+		}
+	});
+	$("#chkTimeAllChk").on("click", function(e) {
+		
+	});
+
+	
+	//디폴트 데이터테이블
+	dtManagerList = dtutil.init('dt_managerList', {
+// 		ordering: false,
+		columns: [
+			{"data" : "cstmSeq"},
+			{"data" : "cstmSeq"},
+			{"data" : "email"},
+			{"data" : "nickNm"},
+			{"data" : "cstmNm"},
+			{"data" : "regDate"},
+
+		],								
+		columnDefs: [
+			{
+				/**
+				targets [0,1,2]: 0번째 1번째 2번째 컬럼
+				dt-body-left : 왼쪽정렬
+				dt-body-center : 가운데정렬
+				dt-bddy-right : 오른쪽정렬
+				*/ 
+				
+				render: function( data, type, row, meta) {
+					var str = '';
+        			str += '<span class="inp_check">';
+        			str += '<input type="checkbox" name="seqChk" id="inp_check1_'+data+'" value="'+row.cstmSeq+'">';
+        			str += '<label for="inp_check1_'+data+'"></label>';
+        			str += '</span>';
+        			
+	     			return str;
+				},
+				targets: 0,
+				className: "dt-body-left"
+			},
+
+			{
+							
+				render: function( data, type, row, meta) {
+					if(pageNo == 1){
+						return '<a href="javascript:;" onclick="fn_getEventView('+row.cstmSeq+');"><span>'+(meta.row+1)+'</span></a>';	
+					}else{
+						return '<a href="javascript:;" onclick="fn_getEventView('+row.cstmSeq+');"><span>'+((meta.row+1)+(pageNo*10))+'</span></a>';
+					}
+					
+				},
+				targets: 1,
+				className: "dt-body-left"
+			}
+		],
+		dblCallback: function(data) {
+			if(data != null){
+				fn_getEventView(data.eventSeq);
+			}
+		}
+	});	
+
+	
+	fn_getManagerList();
+});
+
+function fn_getManagerList(){
+	
+	var pageNo = $("#manager_pageNo").val();
+	var formData = $("#frm_managerSearch").serialize();
+	formData += "&page="+(pageNo-1);//컨트롤러에서 페이지는 0부터 카운트
+
+	comutil.callAjax("/manager/list", formData, function(data) {
+		var managerList = data.data.content;
+		dtManagerList.clear().draw();
+		if (comutil.isEmpty(managerList) == false) {
+			$(managerList).each(function() {
+				dtManagerList.row.add(this);
+			});
+			dtManagerList.rows().draw();
+		}
+		
+		$("#managerList_pagination").pagingNavi({
+			pageNo: $("#manager_pageNo").val(),
+			totalPage: data.data.totalPages,
+			pageCallback: function(page) {
+				$("#manager_pageNo").val(page);
+				fn_getManagerList();
+			}
+		});
+	});
+	
+}
+
+function fn_deleteManagerList(){
+	layerPopClose();
+	var chkArr = []
+	var chkLength = document.getElementsByName("seqChk").length;
+	for (var i=0; i<chkLength; i++) {
+		if (document.getElementsByName("seqChk")[i].checked == true) {
+			chkArr.push(parseInt(document.getElementsByName("seqChk")[i].value));
+		}
+	}console.log(chkArr);
+	if(chkArr.length>0){
+		//삭제로직넣기
+		comutil.callAjax("/manager/delete/list", {"checkedManagerList" : chkArr}, function(data) {
+			fn_getManagerList();
+		});
+	}else{
+		showLayer('mainNotice');
+	}
+}
+
+function fn_checkAll(checkAll){
+	let checkBoxs = document.getElementsByName("seqChk");
+
+	checkBoxs.forEach((checkbox)=>{
+		checkbox.checked=checkAll.checked;
+            })
+}
+</script>

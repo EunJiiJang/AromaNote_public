@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: refuel-aromanote-dev.c4bcyevfqzrs.ap-northeast-2.rds.amazonaws.com
+    username: jayjang
+    password: devgkgksmf1!
+

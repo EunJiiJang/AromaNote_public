@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head>
+	<script type="text/javascript" src="../../../static/admin/js/jquery-3.3.1.min.js"></script>
+	<meta charset="UTF-8">
+</head>
+
+<body>	
+	<div id="adLogin">
+		<div class="adLogCon">
+			<div class="adTtl">
+				<img src="../../../static/admin/images/common/logo.png" alt="logo">
+				<p class="title">관리자 페이지</p>
+			</div>
+			<div class="inputArea">
+				<form  th:action="@{/login_proc}" method="post" >
+					<div class="inp_text_login">
+						<input type="text" name="username" id="username"  style="background-color: #FFFFFF" maxlength="20" required="required" placeholder="아이디" />
+					</div>
+					<div class="inp_text_login">
+						<input type="password" name="password" id="password" maxlength="20" style="margin-top: 20px;background-color: #FFFFFF" autocomplete="off" required="required" placeholder="password" />
+					</div>
+<!--					<div class="form-group">-->
+<!--						<label th:for="username">이메일</label>-->
+<!--						<input type="text" name="username" id="username" class="form-control" placeholder="이메일 입력해주세요">-->
+<!--					</div>-->
+<!--					<div class="form-group">-->
+<!--						<label th:for="password">비밀번호</label>-->
+<!--						<input type="password" id="password" class="form-control" name="password" placeholder="비밀번호">-->
+<!--					</div>-->
+					<div class="btn_wrap al_c">
+						<button type="submit"    class="btn btnType1 btnSizeL"><span>로그인</span></button>
+<!--						<button type="submit"    class="btn btnType1 btnSizeL"><span>로그인</span></button>-->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+	$( document ).ready(function() {
+		$("#username").val("testId");
+		$("#password").val("password");
+	});
+
+
+
+</script>
+<style>
+	/* 로그인 */
+	#adLogin {width:100%;height:100%;background:#ccc;}
+	#adLogin .adLogCon {position:absolute;left:50%;top:50%;width:450px;height:440px;margin:-220px 0 0 -242.5px;background: #eeeeee;}
+	#adLogin .adLogCon .adTtl {padding-top:40px;text-align:center;}
+	#adLogin .adLogCon .adTtl .title{margin-top:10px;font-size:18px;font-weight:700;}
+	#adLogin .adLogCon .inputArea {width:340px;margin:30px auto;}
+	#adLogin .adLogCon .inputArea .inp_text + .inp_text{margin-top:20px;}
+	#adLogin .adLogCon .inputArea .inp_check{margin-top:10px;}
+	#adLogin .adLogCon .inputArea .btn_wrap{margin-top:20px;}
+	.inp_text_login input:focus {color:#101010;border-color:#101010;}
+	.inp_text_login input.readOnly {color:#555555;background:#eeeeee;border-color:#dcdcdc;cursor:not-allowed;}
+	.inp_text_login input.error {/*color:#d10000;*/border-color:#d10000;}
+	.inp_text_login input {width:100%;height:40px;padding:0 8px;line-height:40px;color:#555;text-indent:4px;border:1px solid #dcdcdc;outline:none;
+		-webkit-box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-o-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+		box-sizing:border-box;
+	}
+	.btnType1 {color:#ffffff;background:#A077FF;border:1px solid #A077FF;}
+	.btnType1:before {background-color:#ff8b33;}
+	.btnType1:focus,
+	.btnType1:hover,
+	.btnType1.active {color:#ffffff;}
+	.btnType1.disabled,
+	.btnType1.disabled:hover {cursor:default;color:#dcdcdc;/*background:#ffffff;*/border:1px solid #dcdcdc;}
+	.btnType1 .arr-right:before,
+	.btnType1 .arr-right:after {background:#ff8b33;}
+	.btnType1:focus .arr-right:before,
+	.btnType1:hover .arr-right:before,
+	.btnType1:focus .arr-right:after,
+	.btnType1:hover .arr-right:after {background:#fff;}
+	.btnSizeL {min-width:180px;height:48px;font-size:16px;line-height:46px;}
+	.btnSizeL .arr-right {padding-right:15px;}
+	.btnSizeL .arr-right:before {height:6px;margin-top:-5px;}
+	.btnSizeL .arr-right:after {height:6px;margin-top:1px;}
+	.al_c {text-align:center;}
+	html, body {width:100%;height:100%;min-width:1280px;}
+	* {margin:0; padding:0;}
+</style>

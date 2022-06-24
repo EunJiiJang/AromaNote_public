@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a th:h
+<p>Click <a th:href="@{/member/member}">member</a> to see a greeting.</p>
+<p>Click <a th:href="@{/admin/admin}">admin</a> to see a greeting.</p>
+<p>Click <a th:href="@{/testA}">adminTest</a> to see a greeting.</p>
+<p sec:authorize="isAuthenticated()">Click <a th:href="@{/login/adminLogin}">로그인</a> to see a greeting.</p>
+<p sec:authorize="hasRole('ROLE_ADMIN')">Click <a th:href="@{/login/logout}">로그아웃12</a> to see a greeting.</p>
+<p sec:authorize="hasRole('ROLE_ADMIN')">Click <a th:href="@{/login/logout}" >로그아웃12</a> to see a greeting.</p>
+<p sec:authorize="hasRole('ROLE_MEMBER')">Click <a th:href="@{/login/logout}">로그아웃12</a> to see a greeting.</p>
+</body>
+</html>
+<script>
+
+
+</script>
